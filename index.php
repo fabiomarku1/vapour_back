@@ -21,13 +21,19 @@ if($parts[2]!="User") #hereeeeeeeeeeeeeeeee for the api name http://localhost:80
 $id = $parts[3] ?? null;
 
 
-$database = new Database("localhost","test" ,"root","fabio123");
+$database = new Database("localhost","web" ,"root","123456");
 $database->getConnection();
 
 $repository = new UserRepository($database);
+$salesRepo = new SalesRepository($database, "sales");
 
-$controller = new UserController($repository);
-$controller->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
+// $controller = new UserController($repository);
+// $controller->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
+
+
+$saleController = new SalesController($salesRepo);
+$saleController->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
+
 
 
 ?>

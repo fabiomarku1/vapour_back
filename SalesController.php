@@ -1,8 +1,8 @@
 <?php
 
-class UserController {
+class SalesController {
 
-    public function __construct(private UserRepository $repository)
+    public function __construct(private SalesRepository $repository)
     {
         
     }
@@ -11,17 +11,21 @@ class UserController {
     {
         if($id)
         {
-            echo "exet2";
             $this->processResorceRequest($method, $id);
         }
         else{
-            
             $this->processCollectionRequest($method);
         }
 
     }
     public function processResorceRequest(string $method,string $id):void
     {
+        var_dump("here at sales");
+        switch($method){
+            case "GET":
+                echo json_encode($this->repository->FindById($id));
+                break;
+        }
 
     }
 
