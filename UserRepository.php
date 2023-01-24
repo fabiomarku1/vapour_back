@@ -24,14 +24,14 @@ class UserRepository{
 
     public function Create(array $data)
     {
-        $sql = "INSERT INTO user (name,surname,age) VALUES (:name,:surname,:age)";
+        $sql = "INSERT INTO user (name,age) VALUES (:name,:age)";
         
         $stmt = $this->connection->prepare($sql);
         
-        $stmt->bindValue(":name",$data["name"],PDO::PARAM_STR);
-        $stmt->bindValue(":surname",$data["surname"],PDO::PARAM_STR);
-        $stmt->bindValue(":age",$data["age"],PDO::PARAM_INT);
-        $stmt->execute();
+      //  $stmt->bindValue(":name",$data["name"],PDO::PARAM_STR);
+      //  $stmt->bindValue(":surname",$data["surname"],PDO::PARAM_STR);
+      //  $stmt->bindValue(":age",$data["age"],PDO::PARAM_INT);
+      //  $stmt->execute();
         return true;
     }
 }

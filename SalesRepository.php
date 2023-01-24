@@ -14,15 +14,16 @@ class SalesRepository implements IRepositoryBase{
 	 * @return mixed
 	 */
 	public function Create($request) {
+		$date = date ('Y-m-d H:i:s');
+        $sql = "INSERT INTO $this->tableName (Amount,UserId,DateCreated) VALUES (:Amount,:UserId,:DateCreated)";
 
-        $date =new DateTime("now");
-      //  $result = $date->format('YYYY-MM-DD hh:mm:ss');
-        $sql = "INSERT INTO $this->tableName (Amount,UserId) VALUES (:Amount,:UserId)";
         
         $stmt = $this->connection->prepare($sql);
-        
-        $stmt->bindValue(":Amount",$request["Amount"],PDO::PARAM_INT);
+		$stmt->bindValue(":Amount",$request["Amount"],PDO::PARAM_INT);
         $stmt->bindValue(":UserId",$request["UserId"],PDO::PARAM_INT);
+		$stmt->bindValue(":DateCreated", $date, PDO::PARAM_STR);
+
+		var_dump($sql);
         $stmt->execute();
         return true;
 	}
@@ -66,6 +67,14 @@ class SalesRepository implements IRepositoryBase{
 	 * @return mixed
 	 */
 	public function Update($request) {
+		$amount=$request["Amount"];
+		$userId=$request["UserId"];
+		$id = $request["id"];
+		$sql="UPDATE $this->tableName 	SET Amount=$amount, UserId=$userId where Id=$id";
+
+		$stmt = $this->connection->query($sql);
+		$stmt->execute();
+		return true;
 	}
 	
 	/**
@@ -73,6 +82,24 @@ class SalesRepository implements IRepositoryBase{
 	 * @param mixed $request
 	 * @return mixed
 	 */
-	public function Delete($request) {
+	public function Delete($id) {
+		$sql="DELETE from $this->tableName where Id=$id";
+		$stmt = $this->connection->query($sql);
+		$stmt->execute();
+		return true;
+	}
+
+
+	public function Update2(SalesUpdateDTO $request) {
+		// $amount=$request["Amount"];
+		// $userId=$request["UserId"];
+		// $id = $request["id"];
+		$sql="UPDATE $this->tableName 	SET Amount=$request->Amount, UserId=$request->UserId where Id=$request->Id";
+
+		$stmt = $this->connection->query($sql);
+		$stmt->execute();
+		return true;
 	}
 }
+
+?>
