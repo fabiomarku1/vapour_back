@@ -1,12 +1,11 @@
 <?php
-
-use function PHPSTORM_META\map;
-
+include("../testPhp/DTO/SaleUpdateDTO.php");
 class SalesController
 {
 
     public function __construct(private SalesRepository $repository)
     {
+
     }
 
     public function proccesRequest(string $method, $id)
@@ -21,24 +20,23 @@ class SalesController
     {
         var_dump("here at sales");
         switch ($method) {
-            case "GET":
+            case "GET": //ok
                 echo json_encode($this->repository->FindById($id));
                 break;
 
             case "PUT":
                 $data = (array)json_decode(file_get_contents("php://input"), true);
 
-                include("../testPhp/DTO/SaleUpdateDTO.php");
+                
                 $existing = $this->repository->FindById($id);
                 var_dump(json_encode($existing));
+              
                 if($existing ==null)
                 {
                     echo "its null";
                     exit;
                 }
-
-                $newReq;
-
+                
                 //mapping from existing to the new one
                 foreach($data as $key=>$val)
                 {
@@ -91,5 +89,12 @@ class SalesController
                 );
                 break;
         }
+    }
+
+
+
+    public function Map()
+    {
+
     }
 }

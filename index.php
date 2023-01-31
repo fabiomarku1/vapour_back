@@ -1,7 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
+
+include("../testPhp/Presentation/SalesController.php");
+include("../testPhp/Presentation/UserController.php");
 spl_autoload_register(function ($class) {
     require __DIR__ . "/$class.php";
 });
@@ -19,15 +21,23 @@ $parts = explode("/", $_SERVER["REQUEST_URI"]);
 // }
 
 $id = $parts[3] ?? null;
-$database = new Database("localhost","test" ,"root","fabio123");
+$database = new Database("localhost","web" ,"root","123456");
 $database->getConnection();
 
 
 if($parts[2]=="Sales")
 {
-    $salesRepo = new SalesRepository($database, "Sales");
+    var_dump("gegegegeg");
+    $salesRepo = new SalesRepository($database);
     $saleController = new SalesController($salesRepo);
     $saleController->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
+}
+else if($parts[2]=="User")
+{
+$repository = new UserRepository($database);
+
+$controller = new UserController($repository);
+$controller->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
 }
 else
 {
@@ -39,10 +49,7 @@ else
 
 
 
-//$repository = new UserRepository($database);
 
-// $controller = new UserController($repository);
-// $controller->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
 
 
 

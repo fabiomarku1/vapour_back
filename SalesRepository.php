@@ -1,29 +1,36 @@
 <?php
+
+use PSpell\Dictionary;
+
 class SalesRepository implements IRepositoryBase{
 
-    private $tableName;
+    private $tableName="Sales";
     private PDO $connection;
-    public function __construct(Database $database,$table)
+    public function __construct(Database $database)
     {
         $this->connection = $database->getConnection();
-        $this->tableName = $table;
     }
     
-	/**
-	 * @param mixed $request
-	 * @return mixed
-	 */
 	public function Create($request) {
 		$date = date ('Y-m-d H:i:s');
         $sql = "INSERT INTO $this->tableName (Amount,UserId,DateCreated) VALUES (:Amount,:UserId,:DateCreated)";
 
-        
         $stmt = $this->connection->prepare($sql);
-		$stmt->bindValue(":Amount",$request["Amount"],PDO::PARAM_INT);
-        $stmt->bindValue(":UserId",$request["UserId"],PDO::PARAM_INT);
+		
+		$bool["an"]=$stmt->bindValue(":Amount",$request["amount"],PDO::PARAM_INT);
+       	$bool["userId"]= $stmt->bindValue(":UserId",$request["userId"],PDO::PARAM_INT);
+		
 		$stmt->bindValue(":DateCreated", $date, PDO::PARAM_STR);
 
-		var_dump($sql);
+		foreach($bool as $key=>$val)
+		{
+			if($val!=true)
+			{
+				throw new Exception("error at $key");
+
+			}
+		}
+
         $stmt->execute();
         return true;
 	}
@@ -49,7 +56,7 @@ class SalesRepository implements IRepositoryBase{
 	 * @return mixed
 	 */
 	    public function FindAll():array{
-        $sql = "select * from user";
+        $sql = "select * from $this->tableName";
         $stmt = $this->connection->query($sql);
 
         $data = [];
@@ -67,6 +74,7 @@ class SalesRepository implements IRepositoryBase{
 	 * @return mixed
 	 */
 	public function Update($request) {
+
 		$amount=$request["Amount"];
 		$userId=$request["UserId"];
 		$id = $request["id"];
