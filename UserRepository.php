@@ -27,13 +27,14 @@ class UserRepository implements IRepositoryBase{
     {
         var_dump($data);
         $this->validate($data);
-
-        $sql = "INSERT INTO user (name,surname,age) VALUES (:Name,:Surname,:Age)";
+        $sql = "INSERT INTO user (name,surname,age,dateCreated) VALUES (:Name,:Surname,:Age,:DateCreated)";
 
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(":Name", $data["Name"], PDO::PARAM_STR);
         $stmt->bindValue(":Surname", $data["Surname"], PDO::PARAM_STR);
         $stmt->bindValue(":Age", $data["Age"], PDO::PARAM_INT);
+        $stmt->bindValue(":DateCreated", date ('Y-m-d H:i:s'));
+        
         //add more properites for binding
 
         $stmt->execute();
