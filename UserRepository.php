@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
  include("../testPhp/Exceptions/NotFoundException.php");
  include("../testPhp/Exceptions/BadRequestException.php");
 class UserRepository implements IRepositoryBase{
@@ -27,19 +30,46 @@ class UserRepository implements IRepositoryBase{
     {
         var_dump($data);
         $this->validate($data);
-        $sql = "INSERT INTO user (name,surname,age,dateCreated) VALUES (:Name,:Surname,:Age,:DateCreated)";
+
+
+        $salt=$this->CreatePassword("Passowrd");
+
+        var_dump($salt, gettype($salt));
+
+
+        $sql = "INSERT INTO user (name,surname,age,dateCreated,password_hash) VALUES (:Name,:Surname,:Age,:DateCreated,:Password_Hash)";
 
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(":Name", $data["Name"], PDO::PARAM_STR);
         $stmt->bindValue(":Surname", $data["Surname"], PDO::PARAM_STR);
         $stmt->bindValue(":Age", $data["Age"], PDO::PARAM_INT);
         $stmt->bindValue(":DateCreated", date ('Y-m-d H:i:s'));
-        
+
+
+        $stmt->bindValue(":Password_Hash",$salt, PDO::PARAM_STR);
+      
+       // $stmt->bindValue(":Password_Hash",$salt);
+
         //add more properites for binding
 
         $stmt->execute();
         return true;
     }
+
+    public function FindUserByEmail($email)
+    {
+        $sql = "SELECT * FROM User where Email=$email";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+     
+        return $data == false ? throw new NotFoundException("User with Email =$email doesnt exists") : $data;
+    }
+
+
+
+
 	/**
 	 * @param mixed $id
 	 * @return mixed
@@ -127,5 +157,18 @@ class UserRepository implements IRepositoryBase{
         }
         return $existing;
     }
+
+    private function CreatePassword(string $password)
+    {
+        include_once("../testPhp/Utility.php");
+        Utility::$KEY;
+        $passwordSalt = Utility::$KEY . $password;
+        $passwordHash = hash("sha512", $passwordSalt);
+
+        return $passwordHash;
+    }
+
+
+
 	
 }

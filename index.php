@@ -5,6 +5,7 @@ declare(strict_types=1);
 include("../testPhp/Presentation/SalesController.php");
 include("../testPhp/Presentation/UserController.php");
 include("../testPhp/Presentation/AuthenticationController.php");
+include("../testPhp/Repository/RepositoryManager.php");
 
 spl_autoload_register(function ($class) {
     require __DIR__ . "/$class.php";
@@ -26,6 +27,7 @@ $id = $parts[3] ?? null;
 $database = new Database("localhost","web" ,"root","");
 $database->getConnection();
 
+$repositoryManager=new RepositoryManager($database);
 
 if($parts[2]=="Sales")
 {
@@ -42,9 +44,7 @@ $controller->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
 }
 else if($parts[2]=="Auth")
 {
-    $userRepository = new UserRepository($database);
-    $authRepository = new AuthenticationReposiory();
-    $authController =new AuthenticationController($authRepository,$userRepository);
+    $authController =new AuthenticationController($repositoryManager);
     $authController->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
 }
 else

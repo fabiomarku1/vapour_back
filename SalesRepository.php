@@ -73,7 +73,7 @@ class SalesRepository implements IRepositoryBase{
 	 * @param mixed $request
 	 * @return mixed
 	 */
-	public function Update($request) {
+	public function Update($id,$request) {
 
 		$amount=$request["Amount"];
 		$userId=$request["UserId"];
