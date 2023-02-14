@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-
+header("Access-Control-Allow-Origin: *");
 
 include("../testPhp/Presentation/SalesController.php");
 include("../testPhp/Presentation/UserController.php");
