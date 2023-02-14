@@ -40,7 +40,7 @@ else if($parts[2]=="User")
 {
 $repository = new UserRepository($database);
 $controller = new UserController($repository);
-$controller->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
+$controller->proccesRequest($_SERVER["REQUEST_METHOD"], $id); 
 }
 else if($parts[2]=="Auth")
 {
