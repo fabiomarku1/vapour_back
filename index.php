@@ -1,12 +1,14 @@
 <?php
 declare(strict_types=1);
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
 
 include("../testPhp/Presentation/SalesController.php");
 include("../testPhp/Presentation/UserController.php");
 include("../testPhp/Presentation/AuthenticationController.php");
 include("../testPhp/Repository/RepositoryManager.php");
-
+include("../testPhp/Presentation/ProductController.php");
+include("../testPhp/Repository/ProductRepository.php");
 spl_autoload_register(function ($class) {
     require __DIR__ . "/$class.php";
 });
@@ -46,6 +48,11 @@ else if($parts[2]=="Auth")
 {
     $authController =new AuthenticationController($repositoryManager);
     $authController->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
+}
+else if ($parts[2]=="Product")
+{
+    $productController=new ProductController($repositoryManager);
+    $productController->proccesRequest($_SERVER["REQUEST_METHOD"], $id);
 }
 else
 {

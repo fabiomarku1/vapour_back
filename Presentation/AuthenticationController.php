@@ -1,5 +1,6 @@
 <?php
 include("../testPhp/Repository/AuthenticationRepository.php");
+header("Access-Control-Allow-Origin: *");
 class AuthenticationController
 {
     public function __construct(private RepositoryManager $repositoryManager)
@@ -31,12 +32,11 @@ class AuthenticationController
             case "POST" && $controllerName == "register":
                 $data = (array) json_decode(file_get_contents("php://input"), true);
                 $result = $this->repositoryManager->authenticationRepository->Register($data);
-                echo json_encode(
-                    [
-                        "message" => "Login response",
-                        "response" => $result
-                    ]
+                $data = array(
+                    "response"=>$result
                 );
+                echo json_encode($data);
+    
                 break;
         }
     }

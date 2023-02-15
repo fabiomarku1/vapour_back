@@ -36,9 +36,14 @@ class AuthenticationReposiory
     {
         if($request["Password"]!=$request["ConfirmPassword"])
         throw new BadRequestException("password doesnt match !");
+
+        $user=$this->FindAndCheckIfExistUserByEmail($request["Email"]);
+        if($user)
+            throw new BadRequestException("User already exists");
+
         //$this->validate($request);
         $salt = $this->CreatePassword($request["Password"]);
-        var_dump($salt, gettype($salt));
+       // var_dump($salt, gettype($salt));
 
 
         $sql = "INSERT INTO user (email,dateCreated,password_hash) VALUES (:Email,:DateCreated,:Password_Hash)";
@@ -100,6 +105,17 @@ class AuthenticationReposiory
         return $data == false ? throw new NotFoundException("User with Email =$email doesnt exists") : $data;
     }
 
+
+    public function FindAndCheckIfExistUserByEmail($email)
+    {
+        $sql = "SELECT * FROM User where Email='$email'";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+     
+        return $data == false ? false : $data;
+    }
     public function SaveToken($userId,$token)
     {
         $sql = "UPDATE User SET refresh_token='$token' where Id=$userId";
