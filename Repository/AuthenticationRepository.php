@@ -72,8 +72,13 @@ class AuthenticationReposiory
                 'aud' => 'http://localhost',
                 'iat' => $issueDate,
                 'nbf' => $expiration,
+                'Id'=>$data["Id"],
                 'Name' => $name,
-                "Surname" => $surname
+                "Surname" => $surname,
+                "Age"=>$data["Age"],
+                "Email"=>$data["Email"],
+                "DateCreated"=>$data["DateCreated"],
+                "Role"=>$data["Role"]
             ];
 
             $jwt = JWT::encode($payload, $this->key, 'HS256');

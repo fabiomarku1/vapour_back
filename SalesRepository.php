@@ -1,7 +1,4 @@
 <?php
-
-use PSpell\Dictionary;
-
 class SalesRepository implements IRepositoryBase{
 
     private $tableName="Sales";
@@ -12,24 +9,13 @@ class SalesRepository implements IRepositoryBase{
     }
     
 	public function Create($request) {
-		$date = date ('Y-m-d H:i:s');
-        $sql = "INSERT INTO $this->tableName (Amount,UserId,DateCreated) VALUES (:Amount,:UserId,:DateCreated)";
+        $sql = "INSERT INTO $this->tableName (Amount,ProductName,UserId,DateCreated) VALUES (:Amount,:ProductName,:UserId,:DateCreated)";
 
         $stmt = $this->connection->prepare($sql);
-		
-		$bool["an"]=$stmt->bindValue(":Amount",$request["amount"],PDO::PARAM_INT);
-       	$bool["userId"]= $stmt->bindValue(":UserId",$request["userId"],PDO::PARAM_INT);
-		
-		$stmt->bindValue(":DateCreated", $date, PDO::PARAM_STR);
-
-		foreach($bool as $key=>$val)
-		{
-			if($val!=true)
-			{
-				throw new Exception("error at $key");
-
-			}
-		}
+		$stmt->bindValue(":Amount",$request["Amount"],PDO::PARAM_INT);
+       	$stmt->bindValue(":UserId",$request["UserId"],PDO::PARAM_INT);
+		$stmt->bindValue(":ProductName",$request["ProductName"],PDO::PARAM_STR);
+		$stmt->bindValue(":DateCreated", date ('Y-m-d H:i:s'), PDO::PARAM_STR);
 
         $stmt->execute();
         return true;
@@ -74,7 +60,6 @@ class SalesRepository implements IRepositoryBase{
 	 * @return mixed
 	 */
 	public function Update($id,$request) {
-
 		$amount=$request["Amount"];
 		$userId=$request["UserId"];
 		$id = $request["id"];

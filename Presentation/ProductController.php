@@ -19,7 +19,6 @@ class ProductController {
     }
     public function processResorceRequest(string $method, string $id): void
     {
-
         switch ($method) {
             case "GET": //ok
                 echo json_encode($this->repositoryManager->productRepository->FindById($id));
@@ -29,6 +28,15 @@ class ProductController {
                 $data = (array) json_decode(file_get_contents("php://input"), true);
               //  $result = $this->repository->Update($id,$data);
                 echo json_encode($result = $this->repositoryManager->productRepository->Update($id,$data));
+                break;
+
+            case "POST":
+              //  $data = (array) json_decode(file_get_contents("php://input"), true);
+                $data = file_get_contents("php://input",true); // if sending as raw data in the request body
+    
+                $data = $_FILES['image']['tmp_name']; // if sending as multipart/form-data
+                var_dump($data);
+                  echo json_encode($result = $this->repositoryManager->productRepository->saveImage($id,$data));
                 break;
 
             case "DELETE"://ok

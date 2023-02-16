@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS"); 
 
 include("../testPhp/Presentation/SalesController.php");
 include("../testPhp/Presentation/UserController.php");
@@ -33,7 +34,6 @@ $repositoryManager=new RepositoryManager($database);
 
 if($parts[2]=="Sales")
 {
-    var_dump("gegegegeg");
     $salesRepo = new SalesRepository($database);
     $saleController = new SalesController($salesRepo);
     $saleController->proccesRequest($_SERVER["REQUEST_METHOD"], $id);

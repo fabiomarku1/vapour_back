@@ -34,6 +34,32 @@ class ProductRepository implements IRepositoryBase
         return true;
     }
 
+    function saveImage($productId,$imageData) {
+        $product=$this->FindById($productId);
+      
+      var_dump($imageData);
+        $filename = $product["Name"].time().".png"; // use a timestamp for the filename to avoid collisions
+        
+        $filePath ="C:/XAMP/htdocs/testPhp/images/products/".$filename;
+        $product["Image"]=$filePath;
+
+        if (file_put_contents($filePath, $imageData)) //success
+        {
+            $sql = "UPDATE Product SET Image=(:filePath) WHERE Id=(:Id)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(":filePath", $filePath, PDO::PARAM_STR);
+            $stmt->bindValue(":Id", $product["Id"], PDO::PARAM_INT);
+            $stmt->execute();
+
+          $response = array("status" => "success", "message" => "Image saved successfully.");
+          echo json_encode($response);
+        } else {
+          // Return an error response
+          $response = array("status" => "error", "message" => "Failed to save image.");
+          echo json_encode($response);
+        }
+      }
+
     /**
      *
      * @param mixed $id

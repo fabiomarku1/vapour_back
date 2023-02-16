@@ -1,6 +1,5 @@
 <?php
 include("../testPhp/Repository/AuthenticationRepository.php");
-header("Access-Control-Allow-Origin: *");
 class AuthenticationController
 {
     public function __construct(private RepositoryManager $repositoryManager)

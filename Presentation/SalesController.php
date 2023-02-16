@@ -18,7 +18,6 @@ class SalesController
     }
     public function processResorceRequest(string $method, string $id): void
     {
-        var_dump("here at sales");
         switch ($method) {
             case "GET": //ok
                 echo json_encode($this->repository->FindById($id));
@@ -29,7 +28,6 @@ class SalesController
 
                 
                 $existing = $this->repository->FindById($id);
-                var_dump(json_encode($existing));
               
                 if($existing ==null)
                 {
@@ -45,7 +43,7 @@ class SalesController
 
               //  $request=new SalesUpdateDTO($existing);
                
-                var_dump(json_encode($existing));
+           //     var_dump(json_encode($existing));
                 exit;
 
                 $update = $this->repository->Update($data);
@@ -78,8 +76,6 @@ class SalesController
 
             case "POST":
                 $data = (array)json_decode(file_get_contents("php://input"), true);
-                var_dump($data);
-
                 $resp = $this->repository->Create($data);
                 echo json_encode(
                     [
