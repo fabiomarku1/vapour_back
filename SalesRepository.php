@@ -42,7 +42,7 @@ class SalesRepository implements IRepositoryBase{
 	 * @return mixed
 	 */
 	    public function FindAll():array{
-        $sql = "select * from $this->tableName";
+        $sql = "select * from $this->tableName ORDER BY DateCreated DESC";
         $stmt = $this->connection->query($sql);
 
         $data = [];

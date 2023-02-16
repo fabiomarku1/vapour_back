@@ -46,12 +46,13 @@ class AuthenticationReposiory
        // var_dump($salt, gettype($salt));
 
 
-        $sql = "INSERT INTO user (email,dateCreated,password_hash) VALUES (:Email,:DateCreated,:Password_Hash)";
+        $sql = "INSERT INTO user (email,dateCreated,password_hash) VALUES (:Email,:DateCreated,:Password_Hash,)";
 
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(":Email", $request["Email"]);
         $stmt->bindValue(":DateCreated", date('Y-m-d H:i:s'));
         $stmt->bindValue(":Password_Hash", $salt, PDO::PARAM_STR);
+      //  $stmt->bindValue(":Role","Admin",PDO::PARAM_STR);
 
 
 
