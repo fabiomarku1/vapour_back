@@ -2,8 +2,8 @@
 
 use function PHPSTORM_META\type;
 
- include("../testPhp/Exceptions/NotFoundException.php");
- include("../testPhp/Exceptions/BadRequestException.php");
+ include("../vapour_back/Exceptions/NotFoundException.php");
+ include("../vapour_back/Exceptions/BadRequestException.php");
 class UserRepository implements IRepositoryBase{
 
     private PDO $connection;
@@ -160,7 +160,7 @@ class UserRepository implements IRepositoryBase{
 
     private function CreatePassword(string $password)
     {
-        include_once("../testPhp/Utility.php");
+        include_once("../vapour_back/Utility.php");
         Utility::$KEY;
         $passwordSalt = Utility::$KEY . $password;
         $passwordHash = hash("sha512", $passwordSalt);

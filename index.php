@@ -4,12 +4,12 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS"); 
 
-include("../testPhp/Presentation/SalesController.php");
-include("../testPhp/Presentation/UserController.php");
-include("../testPhp/Presentation/AuthenticationController.php");
-include("../testPhp/Repository/RepositoryManager.php");
-include("../testPhp/Presentation/ProductController.php");
-include("../testPhp/Repository/ProductRepository.php");
+include("../vapour_back/Presentation/SalesController.php");
+include("../vapour_back/Presentation/UserController.php");
+include("../vapour_back/Presentation/AuthenticationController.php");
+include("../vapour_back/Repository/RepositoryManager.php");
+include("../vapour_back/Presentation/ProductController.php");
+include("../vapour_back/Repository/ProductRepository.php");
 spl_autoload_register(function ($class) {
     require __DIR__ . "/$class.php";
 });

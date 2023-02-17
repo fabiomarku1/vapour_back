@@ -1,6 +1,6 @@
 <?php
-include("../testPhp/vendor/autoload.php");
-include("../testPhp/Utility.php");
+include("../vapour_back/vendor/autoload.php");
+include("../vapour_back/Utility.php");
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -69,7 +69,7 @@ class AuthenticationReposiory
             $issueDate = time();
             $expiration = time() * 7200;
             $payload = [
-                'iss' => 'http://localhost/testPhp',
+                'iss' => 'http://localhost/vapour_back',
                 'aud' => 'http://localhost',
                 'iat' => $issueDate,
                 'nbf' => $expiration,

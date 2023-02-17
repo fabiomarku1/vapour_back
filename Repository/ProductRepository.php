@@ -1,5 +1,5 @@
 <?php
-include("../testPhp/IRepositoryBase.php");
+include("../vapour_back/IRepositoryBase.php");
 class ProductRepository implements IRepositoryBase
 {
     private PDO $connection;
@@ -40,7 +40,7 @@ class ProductRepository implements IRepositoryBase
       var_dump($imageData);
         $filename = $product["Name"].time().".png"; // use a timestamp for the filename to avoid collisions
         
-        $filePath ="C:/XAMP/htdocs/testPhp/images/products/".$filename;
+        $filePath ="C:/XAMP/htdocs/vapour_back/images/products/".$filename;
         $product["Image"]=$filePath;
 
         if (file_put_contents($filePath, $imageData)) //success
