@@ -19,3 +19,8 @@ Installation and Usage
 2.  Configure Apache to serve the PHP files in the repository directory.
 3.  Create a new MySQL database called 'web' for the application and import the `web.sql` file.
 4.  Open the login.html file of the front repo [vapor_front](https://github.com/fabiomarku1/vapour_front)
+
+License
+-------
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
