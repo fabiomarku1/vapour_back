@@ -43,10 +43,11 @@ class AuthenticationReposiory
 
         //$this->validate($request);
         $salt = $this->CreatePassword($request["Password"]);
+
        // var_dump($salt, gettype($salt));
 
 
-        $sql = "INSERT INTO user (email,dateCreated,password_hash) VALUES (:Email,:DateCreated,:Password_Hash,)";
+        $sql = "INSERT INTO user (email,dateCreated,password_hash) VALUES (:Email,:DateCreated,:Password_Hash)";
 
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(":Email", $request["Email"]);
