@@ -24,3 +24,9 @@ License
 -------
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+Authors
+-------
+
+-   [Fabio Marku](https://github.com/fabiomarku1)
+-   [Jon Mukaj](https://github.com/jonmukaj)
